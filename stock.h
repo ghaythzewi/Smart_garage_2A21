@@ -2,6 +2,11 @@
 #define STOCK_H
 #include<qstring.h>
 #include<qsqlquerymodel.h>
+#include <QSqlQuery>
+#include <QFrame>
+#include <QtCharts/QtCharts>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
 class Stock
 {
 public:
@@ -13,7 +18,9 @@ public:
     void setnom(QString nom);
     QSqlQueryModel * afficher();
     bool modifier();
-
+    QSqlQueryModel  * recherche(QString );
+    QSqlQueryModel * afficher_trier( QString type,QString facon);
+    bool EXCEL();
 
 
 private:
