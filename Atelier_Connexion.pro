@@ -6,6 +6,7 @@
 
 QT       += core gui sql
 QT       += core gui charts #-----satistiques
+QT       += core gui  serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,12 +27,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    arduino.cpp \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
     voiture.cpp
 
 HEADERS += \
+    arduino.h \
         mainwindow.h \
     connection.h \
     voiture.h
