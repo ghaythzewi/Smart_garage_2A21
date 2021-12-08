@@ -8,8 +8,6 @@
 #include<QSqlQueryModel>
 #include <QTableWidget>
 #include <QIntValidator>
-
-
 #include<QtCharts>
 #include<QChartView>
 
@@ -17,7 +15,18 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
+    int ret=A.connect_arduino(); // lancer la connexion à arduino
+    switch(ret){
+    case(0):qDebug()<< "arduino is available and connected to : "<<A.getarduino_port_name();
+        break;
+    case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+       break;
+    case(-1):qDebug() << "arduino is not available";
+    }
+     QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+     //le slot update_label suite à la reception du signal readyRead (reception des données).
 
 
 
@@ -36,8 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->panne->addItem("CIRCUIT ELECTRIQUE");
     ui->panne->addItem("DIESEL");
 
-
-ui->combo->setModel(Voit.getcins());
+    ui->combo->setModel(Voit.getcins());
     ui->tabvoit->setModel(v.afficher());
     ui->tabzarch->setModel(v.archive());
 }
@@ -48,6 +56,47 @@ MainWindow::~MainWindow()
 }
 
 
+
+
+
+void MainWindow::update_label()  //A modifier
+{
+    data=A.read_from_arduino();
+    ui->label_23->setText(data);
+    QSqlQuery query;
+            query.prepare("SELECT PARKING FROM PERSONNEL WHERE ID='"+data+"'  ");
+
+            if(query.exec())
+            {if(query.next())//staff existe
+         {ui->label_25->setText(query.value(0).toString()) ;
+                QString q=ui->label_25->text();
+
+                if(q=="OUI")
+                {
+                    A.write_to_arduino("1");
+
+                    ui->label_26->setText("MERCI D'ATTENDRE LORS DE L'OUVERTURE ...") ;
+                }
+                else { A.write_to_arduino("0");
+                 ui->label_26->setText("VOUS N'AVEZ PAS LE DROIT D'ACCES MONSIEUR !") ;}
+                }
+                else{
+                                   ui->label_23->clear();
+                         ui->label_25->clear();
+
+                         QMessageBox::critical(nullptr, QObject::tr("PARKING"),
+                                     QObject::tr("STAFF N'EXISTE PAS.\n"
+                                                 "Click Cancel to exit."), QMessageBox::Cancel);
+
+                 }
+
+
+
+                 }
+
+
+
+}
 
 void MainWindow::on_pb_ajouter_clicked()
 {bool test=false;

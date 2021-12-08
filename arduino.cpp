@@ -1,6 +1,6 @@
 #include "arduino.h"
 
-Arduino::Arduino()
+Arduino::Arduino() //constructeur à ne pas modifier |chelsea|
 {
     data="";
     arduino_port_name="";
@@ -8,16 +8,16 @@ Arduino::Arduino()
     serial=new QSerialPort;
 }
 
-QString Arduino::getarduino_port_name()
+QString Arduino::getarduino_port_name() //|chelsea|
 {
     return arduino_port_name;
 }
 
-QSerialPort *Arduino::getserial()
+QSerialPort *Arduino::getserial() //|chelsea|
 {
    return serial;
 }
-int Arduino::connect_arduino()
+int Arduino::connect_arduino() //|chelsea|
 {   // recherche du port sur lequel la carte arduino identifée par  arduino_uno_vendor_id
     // est connectée
     foreach (const QSerialPortInfo &serial_port_info, QSerialPortInfo::availablePorts()){
@@ -43,7 +43,7 @@ int Arduino::connect_arduino()
         return -1;
 }
 
-int Arduino::close_arduino()
+int Arduino::close_arduino() //|chelsea|
 
 {
 
@@ -57,7 +57,7 @@ int Arduino::close_arduino()
 }
 
 
- QByteArray Arduino::read_from_arduino()
+ QByteArray Arduino::read_from_arduino() //|chelsea|
 {
     if(serial->isReadable()){
          data=serial->readAll(); //récupérer les données reçues
@@ -67,7 +67,7 @@ int Arduino::close_arduino()
  }
 
 
-int Arduino::write_to_arduino( QByteArray d)
+int Arduino::write_to_arduino( QByteArray d) //|chelsea|
 
 {
 

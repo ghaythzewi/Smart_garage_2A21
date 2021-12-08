@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "arduino.h"
 #include <QMainWindow>
 #include "voiture.h"
 namespace Ui {
@@ -42,6 +42,8 @@ private slots:
 
     void on_trimarque_clicked();
 
+    void update_label();
+    // ce slot est lancé à chaque réception d'un message de Arduino
 
     void on_defaut_clicked();
 
@@ -53,6 +55,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QByteArray data; // variable contenant les données reçues //arduino
+    Arduino A; // objet temporaire
     Voiture v ;
     Voiture Voit;
 };
