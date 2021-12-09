@@ -7,7 +7,8 @@
 QT       += core gui sql
 QT += core
 QT       += core gui charts #-----satistiques
-
+QT       += core gui  serialport
+QT       += core gui sql network printsupport charts serialport multimedia
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = gestion_personnel
@@ -28,15 +29,25 @@ CONFIG += c++11
 
 
 SOURCES += \
+    arduino.cpp \
+    clients.cpp \
+    excel.cpp \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
-    personnel.cpp
+    personnel.cpp \
+    smtp.cpp \
+    voiture.cpp
 
 HEADERS += \
+    arduino.h \
+    clients.h \
+    excel.h \
         mainwindow.h \
     connection.h \
-    personnel.h
+    personnel.h \
+    smtp.h \
+    voiture.h
 
 FORMS += \
         mainwindow.ui
