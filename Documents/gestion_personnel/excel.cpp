@@ -3,6 +3,7 @@
 #include <QtDebug>
 #include <QVariant>
 #include "excel.h"
+#include "mainwindow.h"
 
 int EXCEL::export2Excel()
 {

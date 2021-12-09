@@ -1,6 +1,5 @@
 #include "smtp.h"
-
-
+#include "mainwindow.h"
 
 Smtp::Smtp( const QString &user, const QString &pass, const QString &host, int port, int timeout )
 {

@@ -1,4 +1,3 @@
-#include "clients.h"
 
 #include <QSqlQuery>
 #include <QtDebug>
@@ -6,9 +5,11 @@
 #include <QObject>
 #include <QSqlQuery>
 #include <QString>
+#include"mainwindow.h"
+#include"client.h"
 
 
-Clients ::Clients ()
+Client ::Client()
 { cin=0 ;
     nom="";
      prenom="";
@@ -17,34 +18,29 @@ Clients ::Clients ()
     adresse =" ";
 }
 
- Clients::Clients(int cin ,QString nom ,QString prenom,int tel ,  QString mail ,QString adresse)
+ Client::Client(int cin ,QString nom ,QString prenom,int tel ,  QString mail ,QString adresse)
 {this->cin=cin; this->nom=nom; this->prenom=prenom;
  this->tel=tel;this->mail=mail;this->adresse=adresse; }
- int Clients::getcin () {return cin;}
-QString Clients::getnom() {return nom;}
-QString Clients:: getprenom() {return prenom;}
-int Clients::gettel () {return tel;}
-QString Clients::getmail() {return mail;}
- QString Clients::getadresse(){return adresse;}
-void Clients::setcin(int cin){this->cin=cin;}
-void Clients ::setnom(QString nom){this->nom=nom;}
-void Clients::setprenom(QString prenom){this->prenom=prenom;}
-void Clients::settel(int tel){this->tel=tel;}
-void Clients::setmail(QString mail){this->mail=mail;}
- void Clients::setadresse(QString adresse){this->adresse=adresse;}
-bool Clients ::ajouter()
+ int Client::getcin () {return cin;}
+QString Client::getnom() {return nom;}
+QString Client:: getprenom() {return prenom;}
+int Client::gettel () {return tel;}
+QString Client::getmail() {return mail;}
+ QString Client::getadresse(){return adresse;}
+void Client::setcin(int cin){this->cin=cin;}
+void Client ::setnom(QString nom){this->nom=nom;}
+void Client::setprenom(QString prenom){this->prenom=prenom;}
+void Client::settel(int tel){this->tel=tel;}
+void Client::setmail(QString mail){this->mail=mail;}
+ void Client::setadresse(QString adresse){this->adresse=adresse;}
+bool Client ::ajouter()
 {
-    bool test=false;
-    qInfo() << test ;
+
    QSqlQuery query;
-   qInfo() << test ;
    QString cin_string=QString::number(cin);
-   qInfo() << test ;
     QString tel_string=QString::number(tel);
-    qInfo() << test ;
-         query.prepare("INSERT INTO GESTIONCLIENTS (cin, nom,prenom,tel,mail,adresse) "
+         query.prepare("INSERT INTO GESTIONCLIENT (cin, nom,prenom,tel,mail,adresse) "
                        "VALUES (:cin, :nom, :prenom, :tel, :mail, :adresse)");
-         qInfo() << test ;
          query.bindValue(0, cin_string);
          query.bindValue(1, nom);
          query.bindValue(2,prenom);
@@ -53,18 +49,18 @@ bool Clients ::ajouter()
          query.bindValue(5, adresse);
 
 
-            test=true;
-           query.exec();
-            return test;
+
+         return  query.exec();
+
 
 
 }
-QSqlQueryModel * Clients ::afficher(){
+QSqlQueryModel * Client ::afficher(){
 
 
 
     QSqlQueryModel *model = new QSqlQueryModel();
-              model->setQuery("SELECT* FROM GESTIONCLIENTS ");
+              model->setQuery("SELECT* FROM GESTIONCLIENT ");
               model->setHeaderData(0, Qt::Horizontal, QObject::tr("cin"));
               model->setHeaderData(1, Qt::Horizontal, QObject::tr("nom"));
               model->setHeaderData(2, Qt::Horizontal, QObject::tr("prenom"));
@@ -78,15 +74,15 @@ QSqlQueryModel * Clients ::afficher(){
 }
 
 
-bool Clients ::supprimer(int cin)
+bool Client ::supprimer(int cin)
 {
  QSqlQuery query;
  QString res=QString::number(cin);
- query.prepare("delete from GESTIONCLIENTS where cin=:cin");
+ query.prepare("delete from GESTIONCLIENT where cin=:cin");
  query.bindValue(":cin",res);
  return query.exec();
 }
-bool Clients::update(int cin, QString nom, QString prenom, int tel, QString mail,QString adresse )
+bool Client::update(int cin, QString nom, QString prenom, int tel, QString mail,QString adresse )
 
               {
 
@@ -95,7 +91,7 @@ bool Clients::update(int cin, QString nom, QString prenom, int tel, QString mail
                   QString cin_string=QString::number(cin);
                    QString tel_string=QString::number(tel);
 
-                  query.prepare("UPDATE GESTIONCLIENTS set cin=:cin,nom=:nom,prenom=:prenom,tel=:tel,mail=:mail,adresse=:adresse  where cin=:cin");
+                  query.prepare("UPDATE GESTIONCLIENT set cin=:cin,nom=:nom,prenom=:prenom,tel=:tel,mail=:mail,adresse=:adresse  where cin=:cin");
 
                   query.bindValue(":cin",cin_string);
 
@@ -116,40 +112,40 @@ bool Clients::update(int cin, QString nom, QString prenom, int tel, QString mail
 
               }
 
-QSqlQueryModel *Clients ::afficher_c_rech(int cin )
+QSqlQueryModel *Client ::afficher_c_rech(int cin )
 {
     QSqlQueryModel * model=new QSqlQueryModel();
     QString res=QString ::number(cin);
-    model->setQuery("select * from GESTIONCLIENTS where cin like '"+res+"%'");
+    model->setQuery("select * from GESTIONCLIENT where cin like '"+res+"%'");
     return model ;
 }
 
-void Clients::recherche(QTableView * table, QString rech)
+void Client::recherche(QTableView * table, QString rech)
 {
     QSqlQueryModel *model= new QSqlQueryModel();
 ;
         QSqlQuery *query=new QSqlQuery;
-        query->prepare("select * from GESTIONCLIENTS where nom like '%"+rech+"%' or cin like '%"+rech+"%' or prenom like '%"+rech+"%' ;");
+        query->prepare("select * from GESTIONCLIENT where nom like '%"+rech+"%' or cin like '%"+rech+"%' or prenom like '%"+rech+"%' ;");
         query->exec();
         model->setQuery(*query);
         table->setModel(model);
         table->show();
 }
-QChart* Clients ::chart_bar()
+QChart* Client ::chart_bar()
 {
     QSqlQuery q1,q2,q3,q4;
     qreal tot=0,c1=0,c2=0,c3=0;
 
-    q1.prepare("SELECT * FROM GESTIONCLIENTS");
+    q1.prepare("SELECT * FROM CLIENTS");
     q1.exec();
 
-    q2.prepare("SELECT * FROM GESTIONCLIENTS WHERE tel>50000000 AND tel<60000000");
+    q2.prepare("SELECT * FROM CLIENTS WHERE tel>50000000 AND tel<60000000");
     q2.exec();
 
-    q3.prepare("SELECT * FROM GESTIONCLIENTS WHERE tel>20000000 AND tel<30000000");
+    q3.prepare("SELECT * FROM CLIENTS WHERE tel>20000000 AND tel<30000000");
     q3.exec();
 
-    q4.prepare("SELECT * FROM GESTIONCLIENTS WHERE tel>90000000 AND tel<100000000");
+    q4.prepare("SELECT * FROM CLIENTS WHERE tel>90000000 AND tel<100000000");
     q4.exec();
 
     while (q1.next()){tot++;}
@@ -205,21 +201,21 @@ QChart* Clients ::chart_bar()
     return chart;
 }
 
-QChart* Clients ::chart_pie()
+QChart* Client ::chart_pie()
 {
     QSqlQuery q1,q2,q3,q4;
     qreal tot=0,c1=0,c2=0,c3=0;
 
-    q1.prepare("SELECT * FROM GESTIONCLIENTS");
+    q1.prepare("SELECT * FROM GESTIONCLIENT");
     q1.exec();
 
-    q2.prepare("SELECT * FROM GESTIONCLIENTS WHERE tel>50000000 AND tel<60000000 ");
+    q2.prepare("SELECT * FROM GESTIONCLIENT WHERE tel>50000000 AND tel<60000000 ");
     q2.exec();
 
-    q3.prepare("SELECT * FROM GESTIONCLIENTS WHERE  tel>20000000 AND tel<30000000 ");
+    q3.prepare("SELECT * FROM GESTIONCLIENT WHERE  tel>20000000 AND tel<30000000 ");
     q3.exec();
 
-    q4.prepare("SELECT * FROM CLIENT WHERE tel>90000000 AND tel<100000000 ");
+    q4.prepare("SELECT * FROM GESTIONCLIENT WHERE tel>90000000 AND tel<100000000 ");
     q4.exec();
 
     while (q1.next()){tot++;}

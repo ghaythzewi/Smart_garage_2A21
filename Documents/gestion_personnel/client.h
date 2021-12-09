@@ -1,7 +1,7 @@
 #ifndef CLIENTS_H
 #define CLIENTS_H
 #include <QString>
-#include<QSqlQueryModel>
+#include <QSqlQueryModel>
 #include <QDialog>
 #include <QMainWindow>
 #include <QSqlDatabase>
@@ -19,14 +19,16 @@
 #include <QtCharts/QCategoryAxis>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
+#include <QString>
+
 
 
 using namespace QtCharts;
-class Clients
+class Client
 {
 public:
-    Clients();
-     Clients(int,QString,QString,int ,  QString ,QString);
+    Client();
+     Client(int,QString,QString,int ,  QString ,QString);
 int getcin ();
 QString getnom() ;
 QString getprenom() ;

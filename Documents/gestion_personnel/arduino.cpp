@@ -1,6 +1,5 @@
 #include "arduino.h"
-#include <QtSerialPort/QSerialPort>
-#include <QtSerialPort/QSerialPortInfo>
+
 Arduino::Arduino() //constructeur à ne pas modifier |chelsea|
 {
     data="";

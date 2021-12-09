@@ -3,12 +3,13 @@
 # Project created by QtCreator 2018-10-26T21:45:23
 #
 #-------------------------------------------------
-
+QT       += core gui sql serialport printsupport network charts multimedia
+QT       += core gui charts
 QT       += core gui sql
 QT += core
 QT       += core gui charts #-----satistiques
-QT       += core gui  serialport
 QT       += core gui sql network printsupport charts serialport multimedia
+QT += printsupport
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = gestion_personnel
@@ -30,26 +31,35 @@ CONFIG += c++11
 
 SOURCES += \
     arduino.cpp \
-    clients.cpp \
+    client.cpp \
     excel.cpp \
+    facture.cpp \
+    historique.cpp \
+    login.cpp \
         main.cpp \
         mainwindow.cpp \
     connection.cpp \
     personnel.cpp \
+    qrcode.cpp \
     smtp.cpp \
     voiture.cpp
 
 HEADERS += \
     arduino.h \
-    clients.h \
+    client.h \
     excel.h \
+    facture.h \
+    historique.h \
+    login.h \
         mainwindow.h \
     connection.h \
     personnel.h \
+    qrcode.h \
     smtp.h \
     voiture.h
 
 FORMS += \
+        login.ui \
         mainwindow.ui
 
 # Default rules for deployment.
@@ -58,4 +68,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    images.qrc
+    ressorce.qrc

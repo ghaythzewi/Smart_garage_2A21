@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>logo.png</file>
-        <file>wael.png</file>
-        <file>icons8-refaire-48.png</file>
     </qresource>
 </RCC>
